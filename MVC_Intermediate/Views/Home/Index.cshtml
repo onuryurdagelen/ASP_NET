@@ -1,0 +1,68 @@
+﻿@* Tanimlarken model kucuk harf ile tanimlanir.Tanimladigimiz modelin degisken turu belirtilir. *@
+@*@model string[]*@
+@using MVC_Intermediate.Models;
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+
+
+}
+
+<h2>Kurslar</h2>
+<hr />
+@* Tanimladigimiz veriyi kullanirken Model seklinde yazilir.*@
+
+@*@Model*@
+
+<div class="alert alert-info" role="alert">
+    <strong>@ViewBag.ProductCount</strong> products Found!
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+
+        <div class="list-group">
+            @foreach (var category in (List<Category>)ViewBag.categories)
+            {
+                <a accesskey="@category.CategoryId" href="#" class="list-group-item list-group-item-action">
+                    @category.CategoryName
+                </a>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-9 col-sm-6">
+        @foreach (var product in Model)
+        {
+            if (product.isInStock == true)
+            {
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="https://picsum.photos/400/300" alt="..." />
+                        <div class="caption">
+                            <h3>@product.ProductName</h3>
+                            <p>
+                                @if (product.Description.Length > 100)
+                                {
+                                    @(product.Description.Substring(0, 100) + "...");
+                                }
+                                else
+                                {
+                                    @product.Description
+                                }
+
+                            </p>
+                            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default">Button</a> </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+
