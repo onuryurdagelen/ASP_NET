@@ -11,7 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_Intermediate", "MVC_Int
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veritabani_Ile_Calisma", "Veritabani_Ile_Calisma\Veritabani_Ile_Calisma.csproj", "{4A385C99-183E-44C3-A4AC-4320CA9A590D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF_INTRO", "EF_INTRO\EF_INTRO.csproj", "{D1220709-05E5-4DE9-B050-6E69E9EB7AF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EF_INTRO", "EF_INTRO\EF_INTRO.csproj", "{D1220709-05E5-4DE9-B050-6E69E9EB7AF0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShopApp", "ShopApp", "{D6C43152-E514-4AC1-9BD3-FFBAD5920091}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopApp.WebUI", "ShopApp.WebUI\ShopApp.WebUI.csproj", "{BE3095CC-AAFB-42A3-ABC5-9F93D8D6473A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +43,16 @@ Global
 		{D1220709-05E5-4DE9-B050-6E69E9EB7AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1220709-05E5-4DE9-B050-6E69E9EB7AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1220709-05E5-4DE9-B050-6E69E9EB7AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3095CC-AAFB-42A3-ABC5-9F93D8D6473A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3095CC-AAFB-42A3-ABC5-9F93D8D6473A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3095CC-AAFB-42A3-ABC5-9F93D8D6473A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3095CC-AAFB-42A3-ABC5-9F93D8D6473A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE3095CC-AAFB-42A3-ABC5-9F93D8D6473A} = {D6C43152-E514-4AC1-9BD3-FFBAD5920091}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {872AA669-400C-44C8-9DDD-6C853DD47164}

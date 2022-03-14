@@ -19,6 +19,8 @@ namespace EF_INTRO
 
         public DbSet<Address> Addresses { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
         ////static LoggerFactory object
         public static readonly ILoggerFactory MyLoggerFactory
             = LoggerFactory.Create(builder => { builder.AddConsole(); });
@@ -32,6 +34,35 @@ namespace EF_INTRO
                                                //.UseSqlite("Data Source=shop.db");
                                                //.UseSqlServer(@"Data Source=DESKTOP-9SFDJHR;Initial Catalog=ShopDB;Integrated Security=SSPI");
                 .UseMySql(@"server=localhost;port=3306;database=shopDB;username=root;password=onur123;");
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username) // Username alanina indeks biraktik.
+                .IsUnique();
+
+            modelBuilder.Entity<Customer>()
+                .Property(p => p.IdentityNumber)
+                .HasMaxLength(11)
+                .IsRequired();
+
+            modelBuilder.Entity<Product>()
+                        .ToTable("Urunler")
+                        .HasKey(p => p.Id);
+
+            modelBuilder.Entity<ProductCategory>()
+                .HasKey(t => new { t.ProductId, t.CategoryId }); //ManyToMany tanimlamak icin
+            modelBuilder.Entity<ProductCategory>()
+                .HasOne(pc => pc.Product)
+                .WithMany(p => p.ProductCategories)
+                .HasForeignKey(pc => pc.ProductId); //ManyToMany tanimlamak icin
+
+            modelBuilder.Entity<ProductCategory>()
+                .HasOne(ct => ct.Category)
+                .WithMany(c => c.ProductCategories)
+                .HasForeignKey(ct => ct.CategoryId);// ManyToMany tanimlamak icin
+
         }
     }
 }

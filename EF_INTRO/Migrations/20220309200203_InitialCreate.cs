@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EF_INTRO.Migrations
 {
-    public partial class OneToManyRelationship : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,18 +36,20 @@ namespace EF_INTRO.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Urunler",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
+                    InsertedDate = table.Column<DateTime>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    LastUpdetedDate = table.Column<DateTime>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Urunler", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,12 +58,36 @@ namespace EF_INTRO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Username = table.Column<string>(maxLength: 15, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(20)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UrunKategorileri",
+                columns: table => new
+                {
+                    ProductId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UrunKategorileri", x => new { x.ProductId, x.CategoryId });
+                    table.ForeignKey(
+                        name: "FK_UrunKategorileri_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UrunKategorileri_Urunler_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Urunler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,10 +112,49 @@ namespace EF_INTRO.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    customer_id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IdentityNumber = table.Column<string>(maxLength: 11, nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.customer_id);
+                    table.ForeignKey(
+                        name: "FK_Customers_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",
                 table: "Addresses",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_UserId",
+                table: "Customers",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UrunKategorileri_CategoryId",
+                table: "UrunKategorileri",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -98,16 +163,22 @@ namespace EF_INTRO.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "UrunKategorileri");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Urunler");
         }
     }
 }

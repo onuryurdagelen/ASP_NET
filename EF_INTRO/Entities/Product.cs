@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace EF_INTRO.Entities
@@ -9,7 +10,8 @@ namespace EF_INTRO.Entities
     {
 
         //primary Key(Id,<type_name> Id)
-        [Key]
+        //[Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] // Id'nin otomatik artma sayisini iptal ederiz.
         public int Id { get; set; }
 
         [MaxLength(100)]
@@ -18,6 +20,14 @@ namespace EF_INTRO.Entities
 
         public decimal Price { get; set; }
 
-        public int CategoryId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Identity alani degistirilemez.
+        public DateTime InsertedDate { get; set; } = DateTime.Now;
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)] // Computed degistirilebilir ve eklenebilir alan demektir.
+        public DateTime LastUpdetedDate { get; set; } = DateTime.Now;
+
+
+        public List<ProductCategory> ProductCategories { get; set; }
+
     }
 }

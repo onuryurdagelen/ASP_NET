@@ -7,11 +7,13 @@ namespace EF_INTRO.Entities
 {
     public class Category
     {
-        [Key]
+        //[Key]
         public int Id { get; set; }
 
         [MaxLength(100)]
         [Required]
         public string Name { get; set; }
+
+        public List<ProductCategory> ProductCategories { get; set; }
     }
 }

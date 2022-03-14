@@ -4,13 +4,11 @@ using System.Text;
 
 namespace EF_INTRO.Entities
 {
-   public class Order
+    public class ProductDemo
     {
-        public int Id { get; set; }
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
 
-       
-        public DateTime DateAdded { get; set; }
-
+        public decimal ProductPrice { get; set; }
     }
 }
