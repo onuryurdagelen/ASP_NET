@@ -8,8 +8,4 @@
     <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Shared\ViewComponents\" />
-  </ItemGroup>
-
 </Project>

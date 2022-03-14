@@ -58,20 +58,14 @@ namespace ShopApp.WebUI.Controllers
                 },
 
             };
-            var categories = new List<Category>()
-            {
-                new Category() { Name = "Phones", Description = "The Category of Phone" },
-                new Category() { Name = "PC", Description = "The Category of PC" },
-                new Category() { Name = "Laptop", Description = "The Category of Laptop" },
-                new Category() { Name = "Electronic", Description = "The Category of Electronic" },
-        };
+           
 
             //ViewBag.Category = category;
 
             var productCategory = new ProductViewModel()
             {
-                Products = products,
-                Categories = categories
+                Products = products
+               
             };
             return View(productCategory);
         }

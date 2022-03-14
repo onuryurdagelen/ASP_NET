@@ -62,7 +62,7 @@ namespace ShopApp.WebUI.Controllers
             var productCategory = new ProductViewModel()
             {
                 Products = products,
-                Categories = categories
+              
             };
             return View(productCategory);
 
