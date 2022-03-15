@@ -1,14 +1,15 @@
 ﻿@model List<Category>
 
-@{ 
+@{
     var categories = Model;
 }
 
 <div class="list-group">
     <h4>Categories</h4>
+    <a asp-controller="Product" asp-action="List" class="list-group-item list-group-item-action">All</a>
     @foreach (var category in categories)
     {
-        <a href="#" class="list-group-item list-group-item-action">
+        <a asp-controller="Product" asp-action="List" asp-route-id="@category.CategoryId" class="list-group-item list-group-item-action">
             @category.Name
         </a>
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShopApp.WebUI.Data;
 using ShopApp.WebUI.Models;
 using ShopApp.WebUI.ViewModels;
 using System;
@@ -20,48 +21,14 @@ namespace ShopApp.WebUI.Controllers
             ViewBag.Greeting = message;
             ViewBag.UserName = "Onur";
 
-            var products = new List<Product>(){
-                new Product()
-                {
-                    Name = "Iphone 8",
-                    Price = 3500,
-                    Description = "Good One"
-                },
-                 new Product()
-                {
-                    Name = "Iphone 10",
-                    Price = 3800,
-                    Description = "Really Good One",
-                    //IsApproved = true
-                },
-                  new Product()
-                {
-                    Name = "Iphone 7",
-                    Price = 3200,
-                    Description = "Really Good One"
-                },
-                   new Product()
-                {
-                    Name = "Iphone 9",
-                    Price = 5800,
-                    Description = "Really Good One",
-                    //IsApproved = true
-                },
 
-            };
-            var categories = new List<Category>()
-            {
-                new Category() { Name = "Phones", Description = "The Category of Phone" },
-                new Category() { Name = "PC", Description = "The Category of PC" },
-                new Category() { Name = "Laptop", Description = "The Category of Laptop" },
-                new Category() { Name = "Electronic", Description = "The Category of Electronic" },
-        };
+            //var categories = CategoryRepository.Categories;
 
             //ViewBag.Category = category;
 
             var productCategory = new ProductViewModel()
             {
-                Products = products,
+                Products = ProductRepository.Products,
               
             };
             return View(productCategory);

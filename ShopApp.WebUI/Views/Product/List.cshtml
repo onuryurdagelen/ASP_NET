@@ -4,6 +4,8 @@
     var products = Model.Products;
 }
 
+
+
 @section Categories
 {
     @await Component.InvokeAsync("Categories")
@@ -17,7 +19,9 @@
 }
 else
 {
+    <h3>@products.Count Products Found</h3>
     <div class="row">
+
         @foreach (var product in products)
         {
 

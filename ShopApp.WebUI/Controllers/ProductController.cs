@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using ShopApp.WebUI.Data;
 using ShopApp.WebUI.Models;
 using ShopApp.WebUI.ViewModels;
 using System;
@@ -27,45 +29,32 @@ namespace ShopApp.WebUI.Controllers
             return View(product);
         }
         //localhost:5000/product/list
-        public IActionResult List()
+        //product/list => tum urunleri (sayfalama)
+        //product/list/2 => 2 numarali kategoriye ait urunler
+        public IActionResult List(int? id)
         {
-            var products = new List<Product>(){
-                new Product()
-                {
-                    Name = "Iphone 8",
-                    Price = 3500,
-                    Description = "Good One"
-                },
-                 new Product()
-                {
-                    Name = "Iphone 10",
-                    Price = 3800,
-                    Description = "Really Good One",
-                    //IsApproved = true
-                },
-                  new Product()
-                {
-                    Name = "Iphone 7",
-                    Price = 3200,
-                    Description = "Really Good One"
-                },
-                   new Product()
-                {
-                    Name = "Iphone 9",
-                    Price = 5800,
-                    Description = "Really Good One",
-                    //IsApproved = true
-                },
-
-            };
-           
-
             //ViewBag.Category = category;
+
+            //product/list/3
+            //Route.Values["controller"] =>product
+            //Route.Values["action"] =>list
+            //Route.Value["id"] => 3
+
+            Console.WriteLine(RouteData.Values["controller"]);
+            Console.WriteLine(RouteData.Values["action"]);
+            Console.WriteLine(RouteData.Values["id"]);
+
+            var products = ProductRepository.Products;
+
+            if (id !=null)
+            {
+                products = products.Where(p => p.CategoryId == id).ToList();
+            }
 
             var productCategory = new ProductViewModel()
             {
                 Products = products
-               
+
             };
             return View(productCategory);
         }
@@ -78,15 +67,8 @@ namespace ShopApp.WebUI.Controllers
 
             //ViewBag.Name = "Samsung S6";
             //ViewBag.Price = 3000;
-            //ViewBag.Description = "Good One";
-
-            var p = new Product()
-            {
-                Name = "Samsung S6",
-                Price = 3000,
-                Description = "Good One"
-            };
-            return View(p);
+            //ViewBag.Description = "Good One
+            return View(ProductRepository.GetProductById(id));
         }
     }
 }
