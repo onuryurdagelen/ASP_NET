@@ -10,6 +10,7 @@ namespace ShopApp.WebUI.Data
     public static class ProductRepository
     {
         private static List<Product> _products = null;
+        //private static Product product = null;
 
         static ProductRepository()
         {
@@ -115,7 +116,7 @@ namespace ShopApp.WebUI.Data
                 new Product()
                 {
                     ProductId = 10,
-                    Name = "Refrigerator ",
+                    Name = "Refrigerator",
                     Price = 5800,
                     Description = "Really Good One",
                     IsApproved=false,
@@ -126,7 +127,7 @@ namespace ShopApp.WebUI.Data
                 new Product()
                 {
                     ProductId = 11,
-                    Name = "Apple 2",
+                    Name = "Fridge",
                     Price = 5800,
                     Description = "Really Good One",
                     IsApproved=false,
@@ -150,6 +151,20 @@ namespace ShopApp.WebUI.Data
         public static Product GetProductById(int id)
         {
             return _products.FirstOrDefault(p => p.ProductId == id);
+        }
+        public static void EditProduct(Product product)
+        {
+            foreach (var p in _products)
+            {
+                if (p.ProductId == product.ProductId)
+                {
+                    p.Name = product.Name;
+                    p.Description = product.Description;
+                    p.ImageUrl = product.ImageUrl;
+                    p.Price = product.Price;
+                    p.CategoryId = product.CategoryId;
+                }
+            }
         }
     }
 }

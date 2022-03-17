@@ -15,5 +15,14 @@
            class="list-group-item list-group-item-action @(ViewBag.SelectedCategory == category.CategoryId.ToString() ? "active" : "")">
             @category.Name
         </a>
+
     }
+    <form action="/product/list" class="form-inline">
+        <div class="form-group mb-2">
+            <label for="price">Price</label>
+            <input type="range" name="price" readonly class="form-control-plaintext" id="price" min="0" value="2000" max="5000">
+        </div>
+
+    </form>
+
 </div>

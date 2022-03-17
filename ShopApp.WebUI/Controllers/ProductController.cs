@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using ShopApp.WebUI.Data;
 using ShopApp.WebUI.Models;
@@ -31,7 +32,7 @@ namespace ShopApp.WebUI.Controllers
         //localhost:5000/product/list
         //product/list => tum urunleri (sayfalama)
         //product/list/2 => 2 numarali kategoriye ait urunler
-        public IActionResult List(int? id)
+        public IActionResult List(int? id,string q,double? min_price,double? max_price)
         {
             //ViewBag.Category = category;
 
@@ -43,14 +44,24 @@ namespace ShopApp.WebUI.Controllers
             Console.WriteLine(RouteData.Values["controller"]);
             Console.WriteLine(RouteData.Values["action"]);
             Console.WriteLine(RouteData.Values["id"]);
+            //Console.WriteLine(RouteData.Values["q"]);
 
+            //QueryString
+            //1.Yontem ==> q parametresini alma
+            //Console.WriteLine(q);
+
+            //2.Yontem ==> q parametresini alma
+            Console.WriteLine(HttpContext.Request.Query["q"].ToString());
             var products = ProductRepository.Products;
 
             if (id !=null)
             {
                 products = products.Where(p => p.CategoryId == id).ToList();
             }
-
+            if (!string.IsNullOrEmpty(q))
+            {
+                products = products.Where(p => p.Name.ToLower().Contains(q.ToLower()) | p.Description.ToLower().Contains(q.ToLower())).ToList();
+            }
             var productCategory = new ProductViewModel()
             {
                 Products = products
@@ -69,6 +80,51 @@ namespace ShopApp.WebUI.Controllers
             //ViewBag.Price = 3000;
             //ViewBag.Description = "Good One
             return View(ProductRepository.GetProductById(id));
+        }
+        public IActionResult Create(string name,double price)
+        {
+            ViewBag.Title = "Create A Product";
+            Console.WriteLine(name);
+            Console.WriteLine(price);
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.Title = "Add A Product";
+            ViewBag.Categories = new SelectList(CategoryRepository.Categories,"CategoryId","Name");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Product p)
+        {
+            ProductRepository.AddProduct(p);
+
+            return RedirectToAction("list");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Title = "Update A Product";
+            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
+            if (id == null || id<=0)
+            {
+                return NotFound();
+            }
+            Console.WriteLine("girdi!");
+            
+
+            return View(ProductRepository.GetProductById(id));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Product p)
+        {
+            ProductRepository.EditProduct(p);
+
+            return RedirectToAction("List");
         }
     }
 }

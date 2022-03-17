@@ -20,11 +20,13 @@
 
     @await Html.PartialAsync("_navbar")
 
+    @*@RenderSection("Header",false)*@
+
     @if (IsSectionDefined("Jumbotron"))
     {
         @RenderSection("Jumbotron", false)
     }
-    <main>
+    <main class="my-3">
         <div class="container mb-4">
 
             @if (IsSectionDefined("Categories"))
