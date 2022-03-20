@@ -93,15 +93,23 @@ namespace ShopApp.WebUI.Controllers
         {
             ViewBag.Title = "Add A Product";
             ViewBag.Categories = new SelectList(CategoryRepository.Categories,"CategoryId","Name");
-            return View();
+
+            return View(new Product());
         }
 
         [HttpPost]
         public IActionResult Create(Product p)
         {
-            ProductRepository.AddProduct(p);
+            //Procut class'inda tanimladimiz sekilde islem gerceklestiginde ise calisir.
+            if (ModelState.IsValid)
+            {
+                ProductRepository.AddProduct(p);
 
-            return RedirectToAction("list");
+                return RedirectToAction("list");
+            }
+            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
+            return View(p);
+           
         }
 
         [HttpGet]
@@ -124,6 +132,12 @@ namespace ShopApp.WebUI.Controllers
         {
             ProductRepository.EditProduct(p);
 
+            return RedirectToAction("List");
+        }
+        [HttpPost]
+        public IActionResult Delete(int ProductId)
+        {
+            ProductRepository.DeleteProduct(ProductId);
             return RedirectToAction("List");
         }
     }

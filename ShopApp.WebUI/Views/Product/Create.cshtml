@@ -3,17 +3,21 @@
 <h4 class="text-center">@ViewBag.Title</h4>
 
 <form action="/product/Create" method="POST">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" value="@Model.Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="price">Price</label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" value="@Model.Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+
             </div>
         </div>
 
@@ -23,7 +27,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="imageUrl">Image URL</label>
-                <input asp-for="ImageUrl" class="form-control" />
+                <input asp-for="ImageUrl" value="@Model.ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-6">
@@ -31,18 +36,20 @@
                 <label for="CategoryId">Category Id</label>
                 <select class="form-control" asp-for="CategoryId" asp-items="@ViewBag.Categories">
                     <option selected disabled>Please Choose any</option>
-                  
+
                     @*<option value="1">Phones</option>
-                    <option value="2">PC</option>
-                    <option value="3">Laptop</option>
-                    <option value="4">Electronic</option>*@
+            <option value="2">PC</option>
+            <option value="3">Laptop</option>
+            <option value="4">Electronic</option>*@
                 </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
         </div>
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <textarea asp-for="Description" class="form-control"></textarea>
+        <textarea asp-for="Description" value="@Model.Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
