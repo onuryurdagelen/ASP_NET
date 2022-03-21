@@ -5,9 +5,7 @@ using System.Text;
 
 namespace shopapp.data_access.Abstract
 {
-    public interface IProductRepository:IRepository<Product>
+    public interface IOrderRepository:IRepository<Order>
     {
-        List<Product> GetPopularProducts();
-        List<Product> GetTop5Products();
     }
 }

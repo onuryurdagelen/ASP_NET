@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShopApp.WebUI.Data;
-using ShopApp.WebUI.Models;
+using shopapp.data_access.Abstract;
 using ShopApp.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,12 @@ namespace ShopApp.WebUI.Controllers
     //localhost:5000
     public class HomeController:Controller
     {
+        private IProductRepository _productRepository;
+
+        public HomeController(IProductRepository productRepository)
+        {
+            this._productRepository = productRepository;
+        }
         //localhost:5000/home/index
         public IActionResult Index()
         {
@@ -28,7 +33,7 @@ namespace ShopApp.WebUI.Controllers
 
             var productCategory = new ProductViewModel()
             {
-                Products = ProductRepository.Products,
+                Products = _productRepository.GetAll(),
               
             };
             return View(productCategory);

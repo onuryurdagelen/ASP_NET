@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using shopapp.data_access.Abstract;
+using shopapp.data_access.Concrete.EfCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +22,9 @@ namespace ShopApp.WebUI
         {
             //MVC
             //razor pages
+            services.AddScoped<IProductRepository, EfCoreProductRepository>();
+            //services.AddScoped<IProductRepository, MySqlProductRepository>();
+            //services.AddScoped<IProductRepository, ADONETProductRepository>();
             services.AddControllersWithViews(); //Controller ile View'i beraber kullanacagimizi belirtiyoruz.
         }
 

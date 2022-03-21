@@ -1,7 +1,7 @@
-﻿@model ProductViewModel
+﻿@model Product
 @{
-    var popularClass = Model.Products.Count > 2 ? "popular" : "";
-    var products = Model.Products;
+    var popularClass = Model.ProductCategories.Count > 2 ? "popular" : "";
+    var products = Model.ProductCategories;
 }
 
 
@@ -12,7 +12,7 @@
 }
 
 
-@if (Model.Products.Count == 0)
+@if (products.Count == 0)
 {
     //urun yok.
     @await Html.PartialAsync("_noproduct")

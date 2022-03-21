@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
-using ShopApp.WebUI.Data;
-using ShopApp.WebUI.Models;
+using shopapp.entity;
 using ShopApp.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -34,40 +33,42 @@ namespace ShopApp.WebUI.Controllers
         //product/list/2 => 2 numarali kategoriye ait urunler
         public IActionResult List(int? id,string q,double? min_price,double? max_price)
         {
-            //ViewBag.Category = category;
+            ////ViewBag.Category = category;
 
-            //product/list/3
-            //Route.Values["controller"] =>product
-            //Route.Values["action"] =>list
-            //Route.Value["id"] => 3
+            ////product/list/3
+            ////Route.Values["controller"] =>product
+            ////Route.Values["action"] =>list
+            ////Route.Value["id"] => 3
 
-            Console.WriteLine(RouteData.Values["controller"]);
-            Console.WriteLine(RouteData.Values["action"]);
-            Console.WriteLine(RouteData.Values["id"]);
-            //Console.WriteLine(RouteData.Values["q"]);
+            //Console.WriteLine(RouteData.Values["controller"]);
+            //Console.WriteLine(RouteData.Values["action"]);
+            //Console.WriteLine(RouteData.Values["id"]);
+            ////Console.WriteLine(RouteData.Values["q"]);
 
-            //QueryString
-            //1.Yontem ==> q parametresini alma
-            //Console.WriteLine(q);
+            ////QueryString
+            ////1.Yontem ==> q parametresini alma
+            ////Console.WriteLine(q);
 
-            //2.Yontem ==> q parametresini alma
-            Console.WriteLine(HttpContext.Request.Query["q"].ToString());
-            var products = ProductRepository.Products;
+            ////2.Yontem ==> q parametresini alma
+            //Console.WriteLine(HttpContext.Request.Query["q"].ToString());
+            //var products = ProductRepository.Products;
 
-            if (id !=null)
-            {
-                products = products.Where(p => p.CategoryId == id).ToList();
-            }
-            if (!string.IsNullOrEmpty(q))
-            {
-                products = products.Where(p => p.Name.ToLower().Contains(q.ToLower()) | p.Description.ToLower().Contains(q.ToLower())).ToList();
-            }
-            var productCategory = new ProductViewModel()
-            {
-                Products = products
+            //if (id !=null)
+            //{
+            //    products = products.Where(p => p.CategoryId == id).ToList();
+            //}
+            //if (!string.IsNullOrEmpty(q))
+            //{
+            //    products = products.Where(p => p.Name.ToLower().Contains(q.ToLower()) | p.Description.ToLower().Contains(q.ToLower())).ToList();
+            //}
+            //var productCategory = new ProductViewModel()
+            //{
+            //    Products = products
 
-            };
-            return View(productCategory);
+            //};
+            //return View(productCategory);
+
+            return View();
         }
         //localhost:5000/product/details
         public IActionResult Details(int id)
@@ -79,7 +80,7 @@ namespace ShopApp.WebUI.Controllers
             //ViewBag.Name = "Samsung S6";
             //ViewBag.Price = 3000;
             //ViewBag.Description = "Good One
-            return View(ProductRepository.GetProductById(id));
+            return View();
         }
         public IActionResult Create(string name,double price)
         {
@@ -92,7 +93,7 @@ namespace ShopApp.WebUI.Controllers
         public IActionResult Create()
         {
             ViewBag.Title = "Add A Product";
-            ViewBag.Categories = new SelectList(CategoryRepository.Categories,"CategoryId","Name");
+            //ViewBag.Categories = new SelectList(CategoryRepository.Categories,"CategoryId","Name");
 
             return View(new Product());
         }
@@ -101,43 +102,43 @@ namespace ShopApp.WebUI.Controllers
         public IActionResult Create(Product p)
         {
             //Procut class'inda tanimladimiz sekilde islem gerceklestiginde ise calisir.
-            if (ModelState.IsValid)
-            {
-                ProductRepository.AddProduct(p);
+            //if (ModelState.IsValid)
+            //{
+            //    ProductRepository.AddProduct(p);
 
-                return RedirectToAction("list");
-            }
-            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
-            return View(p);
+            //    return RedirectToAction("list");
+            //}
+            //ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
+            return View();
            
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.Title = "Update A Product";
-            ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
-            if (id == null || id<=0)
-            {
-                return NotFound();
-            }
-            Console.WriteLine("girdi!");
+            //ViewBag.Title = "Update A Product";
+            //ViewBag.Categories = new SelectList(CategoryRepository.Categories, "CategoryId", "Name");
+            //if (id == null || id<=0)
+            //{
+            //    return NotFound();
+            //}
+            //Console.WriteLine("girdi!");
             
 
-            return View(ProductRepository.GetProductById(id));
+            return View();
         }
 
         [HttpPost]
         public IActionResult Edit(Product p)
         {
-            ProductRepository.EditProduct(p);
+            //ProductRepository.EditProduct(p);
 
             return RedirectToAction("List");
         }
         [HttpPost]
         public IActionResult Delete(int ProductId)
         {
-            ProductRepository.DeleteProduct(ProductId);
+            //ProductRepository.DeleteProduct(ProductId);
             return RedirectToAction("List");
         }
     }
