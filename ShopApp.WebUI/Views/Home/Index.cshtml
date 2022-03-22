@@ -1,15 +1,14 @@
-﻿@model Product
+﻿@model ProductViewModel
 
 @{
-    var popularClass = Model.ProductCategories.Count > 2 ? "popular" : "";
-    var products = Model.ProductCategories;
-
+    var popularClass = Model.Products.Count > 2 ? "popular" : "";
+    var products = Model.Products;
 }
 
-@section Categories
+@*@section Categories
 {
     @await Component.InvokeAsync("Categories")
-}
+}*@
 
 @section MessageBox
 {
@@ -51,9 +50,6 @@ else
 
         @foreach (var product in products)
         {
-
-
-
             <div class="col-md-4 mt-2">
                 @await Html.PartialAsync("_product", product)
             </div>

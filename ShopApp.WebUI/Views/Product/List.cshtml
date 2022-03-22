@@ -1,35 +1,28 @@
-﻿@model Product
+﻿@model ProductViewModel
+
+
 @{
-    var popularClass = Model.ProductCategories.Count > 2 ? "popular" : "";
-    var products = Model.ProductCategories;
+    var popularClass = Model.Products.Count > 2 ? "popular" : "";
+    var products = Model.Products;
 }
 
-
-
-@section Categories
+@*@section Categories
 {
     @await Component.InvokeAsync("Categories")
-}
-
+}*@
 
 @if (products.Count == 0)
 {
-    //urun yok.
     @await Html.PartialAsync("_noproduct")
 }
 else
 {
-    <h3>@products.Count Products Found</h3>
     <div class="row">
-
         @foreach (var product in products)
         {
-
-
-            <div class="col-md-4 mt-2">
+            <div class="col-md-4">
                 @await Html.PartialAsync("_product", product)
             </div>
         }
     </div>
-
 }

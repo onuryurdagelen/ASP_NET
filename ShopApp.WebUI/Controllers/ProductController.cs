@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
+using shopapp.data_access.Abstract;
 using shopapp.entity;
-using ShopApp.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,12 @@ namespace ShopApp.WebUI.Controllers
 {
     public class ProductController:Controller
     {
+        private IProductRepository _productRepository;
+
+        public ProductController(IProductRepository productRepository)
+        {
+            this._productRepository = productRepository;
+        }
         public IActionResult Index()
         {
             /* VERI AKTARIM YONTEMLERI:
@@ -19,7 +25,7 @@ namespace ShopApp.WebUI.Controllers
              *Model
              *ViewData 
              */
-            var product = new Product() { Name = "Iphone X", Price = 6000, Description = "Good Model" };
+            var product = new Product() { Name = "Iphone X", Price = 6000, Description = "Good Model",ImageUrl="1.png" };
             //ViewData["Category"] = "Phones";
             //ViewData["Product"] = product;
 
@@ -34,6 +40,8 @@ namespace ShopApp.WebUI.Controllers
         public IActionResult List(int? id,string q,double? min_price,double? max_price)
         {
             ////ViewBag.Category = category;
+            ///
+
 
             ////product/list/3
             ////Route.Values["controller"] =>product
@@ -53,7 +61,7 @@ namespace ShopApp.WebUI.Controllers
             //Console.WriteLine(HttpContext.Request.Query["q"].ToString());
             //var products = ProductRepository.Products;
 
-            //if (id !=null)
+            //if (id != null)
             //{
             //    products = products.Where(p => p.CategoryId == id).ToList();
             //}
@@ -66,9 +74,14 @@ namespace ShopApp.WebUI.Controllers
             //    Products = products
 
             //};
-            //return View(productCategory);
+            var productCategory = new ProductViewModel()
+            {
+                Products = _productRepository.GetAll(),
 
-            return View();
+            };
+            return View(productCategory);
+
+
         }
         //localhost:5000/product/details
         public IActionResult Details(int id)

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using shopapp.data_access.Abstract;
-using ShopApp.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,28 +16,15 @@ namespace ShopApp.WebUI.Controllers
         {
             this._productRepository = productRepository;
         }
-        //localhost:5000/home/index
+
         public IActionResult Index()
         {
-            int hour = DateTime.Now.Hour;
-
-            string message = hour < 12 ? "Good Morning!" : "Have a good day!";
-            ViewBag.Greeting = message;
-            ViewBag.UserName = "Onur";
-
-
-            //var categories = CategoryRepository.Categories;
-
-            //ViewBag.Category = category;
-
-            var productCategory = new ProductViewModel()
+            var productViewModel = new ProductViewModel()
             {
-                Products = _productRepository.GetAll(),
-              
+                Products = _productRepository.GetAll()
             };
-            return View(productCategory);
 
-           
+            return View(productViewModel);
         }
         //localhost:5000/home/about
         public IActionResult About()
